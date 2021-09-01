@@ -113,7 +113,7 @@ def hashtag=( value )     @config[:hashtag]=value; end
 
 
 
-def parse( str_or_readable, sep: config[:sep], &block )
+def parse( str_or_readable, opts=nil, sep: config[:sep], &block )
 
   check_sep( sep )
 
@@ -127,12 +127,15 @@ def parse( str_or_readable, sep: config[:sep], &block )
     input = Buffer.new( str_or_readable )
   end
 
-  if block_given?
-    parse_lines( input, sep: sep, &block )
+  case
+  when block_given?
+    parse_lines( input, nil, sep: sep, &block )
+  when opts.any?
+    parse_lines( input, opts, sep: sep, &block )
   else
     records = []
 
-    parse_lines( input, sep: sep ) do |record|
+    parse_lines( input, nil, sep: sep ) do |record|
       records << record
     end
 
@@ -471,7 +474,7 @@ end
 
 
 
-def parse_lines( input, sep:, &block )
+def parse_lines( input, opts=nil, sep:, &block )
   ## note: reset (optional) meta data block
   @meta  = nil     ## no meta data block   (use empty hash {} - why? why not?)
 
