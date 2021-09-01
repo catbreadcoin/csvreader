@@ -4,9 +4,9 @@
 class CsvReader   ## note: uses a class for now - change to module - why? why not?
 
   module Version
-    MAJOR = 1    ## todo: namespace inside version or something - why? why not??
-    MINOR = 2
-    PATCH = 4
+    MAJOR = 2    ## todo: namespace inside version or something - why? why not??
+    MINOR = 0
+    PATCH = 0
 
     ## self.to_s  - why? why not?
   end
